@@ -10,7 +10,14 @@ import './App.css';
 const uiConfig = {
   signInFlow: 'popup',
   signInOptions: [
-    EmailAuthProvider.PROVIDER_ID,
+    {
+      provider: EmailAuthProvider.PROVIDER_ID,
+      disableSignUp: {
+          status: true,
+          adminEmail: "dallicjh@gmail.com",
+          helpLink: "",
+      },
+    },
   ],
   callbacks: {
     signInSuccessWithAuthResult: () => false,
@@ -20,7 +27,6 @@ const uiConfig = {
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASE_URL,
 }
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
@@ -36,13 +42,27 @@ function App() {
     return () => unregisterAuthObserver();
   }, []);
 
+  const logout = () => {
+    auth.signOut()
+    setShowAuth(false)
+  }
+
   return (
     <div className="App">
       <h1>WELCOME DREAM2025</h1>
       {isSignedIn ? (
         <div>
           <h2>Hello, {auth.currentUser?.displayName ?? auth.currentUser?.email}👋</h2>
-          <Button onClick={() => auth.signOut()}>LOGOUT</Button>
+          <div style={{ 
+            marginRight: 'auth', marginLeft: 'auth', paddingRight: '10px', paddingLeft: '10px',
+            color: '#888'
+          }}>
+            ❝<br/>
+            네가 어떤 선택을 하든지 나는 너를 존중할 거고, 너를 소중히 여길거야.<br/>
+            그리고 너를 사랑하고 아끼는 사람들이 항상 이 자리에 있다는 사실을 기억하렴.<br/>
+            ❞
+          </div>
+          <Button onClick={logout}>LOGOUT</Button>
         </div>
       ) : (
         <div>

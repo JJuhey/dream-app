@@ -1,0 +1,25 @@
+name: Deploy to Firebase Hosting on PR
+'on': pull_request
+jobs:
+  build_and_preview:
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Generate Environment Variables File for production
+        run: |
+          echo "REACT_APP_API_KEY=$REACT_APP_API_KEY" >> .env.production
+          echo "REACT_APP_AUTH_DOMAIN=$REACT_APP_AUTH_DOMAIN" >> .env.production
+        env:
+          REACT_APP_API_KEY: ${{ secrets.API_KEY }}
+          REACT_APP_AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
+      - name: Install Dependency & Build Application
+        run: npm ci && npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DREAM_APP_300A0 }}'
+          projectId: dream-app-300a0
