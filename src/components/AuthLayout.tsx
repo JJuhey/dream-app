@@ -15,7 +15,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
       }
     });
     return () => unregisterAuthObserver();
-  }, []);
+  }, [auth]);
 
   return (
     <div className='App'>

@@ -31,7 +31,7 @@ const MainPage = () => {
       setShowProgress(!!user);
     });
     return () => unregisterAuthObserver();
-  }, []);
+  }, [auth]);
 
   React.useEffect(() => {
     if(isSignedIn) setShowProgress(false)

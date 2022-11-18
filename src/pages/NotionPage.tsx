@@ -5,7 +5,7 @@ import { Client } from '@notionhq/client';
 const TOKEN = process.env.REACT_APP_NOTION_TOKEN
 const DATABASE_ID = process.env.REACT_APP_NOTION_DATABASE
 
-const notion = new Client({ auth: process.env.TOKEN });
+const notion = new Client({ auth: TOKEN });
 
 const NotionPage = () => {
   useEffect(() => {
