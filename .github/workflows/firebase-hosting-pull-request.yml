@@ -13,9 +13,13 @@ jobs:
         run: |
           echo "REACT_APP_API_KEY=$REACT_APP_API_KEY" >> .env.production
           echo "REACT_APP_AUTH_DOMAIN=$REACT_APP_AUTH_DOMAIN" >> .env.production
+          echo "REACT_APP_NOTION_TOKEN=$REACT_APP_NOTION_TOKEN" >> .env.production
+          echo "REACT_APP_NOTION_DATABASE=$REACT_APP_NOTION_DATABASE" >> .env.production
         env:
           REACT_APP_API_KEY: ${{ secrets.API_KEY }}
           REACT_APP_AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
+          REACT_APP_NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          REACT_APP_NOTION_DATABASE: ${{ secrets.NOTION_DATABASE }}
       - name: Install Dependency & Build Application
         run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
