@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import AuthLayout from '../components/AuthLayout';
 import { Client } from '@notionhq/client';
+import { NOTION_DATABASE, NOTION_TOKEN } from '../config';
 
-const TOKEN = process.env.REACT_APP_NOTION_TOKEN
-const DATABASE_ID = process.env.REACT_APP_NOTION_DATABASE
-
-const notion = new Client({ auth: TOKEN });
+const notion = new Client({ auth: NOTION_TOKEN });
 
 const NotionPage = () => {
   useEffect(() => {
@@ -20,9 +18,9 @@ const NotionPage = () => {
 }
 
 async function getNotionData() {
-  if (!TOKEN || !DATABASE_ID) return []
+  if (!NOTION_TOKEN || !NOTION_DATABASE) return []
 
-  const response = await notion.databases.retrieve({ database_id: DATABASE_ID });
+  const response = await notion.databases.retrieve({ database_id: NOTION_DATABASE });
   console.log(response)
 
   return response

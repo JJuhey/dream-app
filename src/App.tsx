@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import { API_KEY, AUTH_DOMAIN } from './config';
 import { initializeApp } from 'firebase/app'
 
 import NotionPage from './pages/NotionPage';
@@ -9,8 +10,8 @@ import MainPage from './pages/MainPage';
 import './App.css';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
 }
 initializeApp(firebaseConfig);
 
