@@ -1,20 +1,35 @@
 import React, { useEffect } from 'react';
-import { Client } from '@notionhq/client';
 
 import { NOTION_BASE_URL, NOTION_DATABASE, NOTION_TOKEN } from '../config';
 
 import AuthLayout from '../components/AuthLayout';
 
-const notion = new Client({ auth: NOTION_TOKEN, baseUrl: NOTION_BASE_URL });
-
 const NotionPage = () => {
+  const [results, setResults] = React.useState<any>(null);
+
   useEffect(() => {
-    getNotionData()
+    if (!results) {
+      getNotionData()
+        .then(_data => {
+          console.log(_data)
+          setResults(_data.results)
+        })
+    }
   }, []);
 
   return (
     <AuthLayout>
       <div>NOTION PAGE</div>
+      <div>
+        {results && (
+          <ul>
+            {results.map((r: any) => 
+              <li key={r.id}>
+                {r.properties.Title.title[0].plain_text}, {r.properties.Date.date.start}
+              </li>)}
+          </ul>
+        )}
+      </div>
     </AuthLayout>
   );
 }
